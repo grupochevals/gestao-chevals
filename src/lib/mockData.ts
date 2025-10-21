@@ -1,5 +1,5 @@
 // Mock data para desenvolvimento sem banco de dados
-import type { Perfil } from '@/types';
+import type { User } from '@/types';
 
 export const MOCK_ENABLED = import.meta.env.VITE_MOCK_MODE === 'true';
 
@@ -12,7 +12,7 @@ if (MOCK_ENABLED) {
   console.log('🔌 [NORMAL MODE] Conectando ao Supabase');
 }
 
-// Usuário mock
+// Usuário mock (Supabase Auth User)
 export const MOCK_USER = {
   id: 'mock-user-id',
   email: 'admin@gestao-chevals.com',
@@ -22,12 +22,12 @@ export const MOCK_USER = {
   role: 'authenticated',
 };
 
-// Perfil mock
-export const MOCK_PROFILE: Perfil = {
+// Perfil mock (User do sistema)
+export const MOCK_PROFILE: User = {
   id: 'mock-user-id',
   email: 'admin@gestao-chevals.com',
   nome: 'Administrador',
-  perfil_id: 1,
+  perfil_id: '1',
   ativo: true,
   primeiro_login: false,
   created_at: new Date().toISOString(),

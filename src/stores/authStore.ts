@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { supabase } from '@/lib/supabase';
-import type { Perfil } from '@/types';
+import type { User } from '@/types';
 import type { User as SupabaseUser } from '@supabase/supabase-js';
 import {
   MOCK_ENABLED,
@@ -11,7 +11,7 @@ import {
 
 interface AuthState {
   user: SupabaseUser | null;
-  profile: Perfil | null;
+  profile: User | null;
   loading: boolean;
   error: string | null;
   initialized: boolean;
@@ -19,7 +19,7 @@ interface AuthState {
   signOut: () => Promise<void>;
   changePassword: (currentPassword: string, newPassword: string) => Promise<{ success: boolean; error?: string }>;
   initialize: () => Promise<void>;
-  updateUserProfile: (profile: Perfil) => void;
+  updateUserProfile: (profile: User) => void;
 }
 
 export const useAuthStore = create<AuthState>((set, get) => ({
@@ -233,7 +233,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     }
   },
 
-  updateUserProfile: (profile: Perfil) => {
+  updateUserProfile: (profile: User) => {
     set({ profile });
   },
 }));

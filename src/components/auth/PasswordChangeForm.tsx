@@ -41,7 +41,7 @@ export function PasswordChangeForm({ onSuccess }: PasswordChangeFormProps) {
   });
 
   const onSubmit = async (data: PasswordChangeFormData) => {
-    const result = await changePassword(data.newPassword);
+    const result = await changePassword(data.currentPassword, data.newPassword);
     
     if (result.success) {
       toast.success('Senha alterada com sucesso!');
