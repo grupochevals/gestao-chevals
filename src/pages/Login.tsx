@@ -37,13 +37,18 @@ export function Login() {
   const onSubmit = async (data: LoginForm) => {
     try {
       const result = await signIn(data.email, data.password);
-      
+
       if (result.success) {
         if (result.requiresPasswordChange) {
           toast.info('É necessário alterar sua senha padrão');
           navigate('/change-password');
         } else {
           toast.success('Login realizado com sucesso!');
+
+          // Pequeno delay para garantir que o estado do Zustand seja propagado
+          // antes da navegação (importante para modo mock)
+          await new Promise(resolve => setTimeout(resolve, 100));
+
           navigate(from, { replace: true });
         }
       } else {
@@ -133,7 +138,7 @@ export function Login() {
           <div className="mt-6 text-center text-sm text-gray-600">
             <p>Credenciais padrão:</p>
             <p className="font-mono text-xs mt-1">
-              admin@chevals.com / 123456
+              admin@gestao-chevals.com / 123456
             </p>
           </div>
         </CardContent>

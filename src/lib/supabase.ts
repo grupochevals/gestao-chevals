@@ -2,12 +2,18 @@ import { createClient } from '@supabase/supabase-js';
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+const mockMode = import.meta.env.VITE_MOCK_MODE === 'true';
 
-if (!supabaseUrl || !supabaseAnonKey) {
+// Em modo mock, usar valores fake para evitar erros
+if (!mockMode && (!supabaseUrl || !supabaseAnonKey)) {
   throw new Error('Missing Supabase environment variables');
 }
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+// Criar cliente Supabase (mesmo em mock mode para evitar erros de tipo)
+export const supabase = createClient(
+  supabaseUrl || 'https://mock.supabase.co',
+  supabaseAnonKey || 'mock-key'
+);
 
 // Tipos para o banco de dados
 export type Database = {

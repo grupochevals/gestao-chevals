@@ -2,6 +2,12 @@ import { create } from 'zustand';
 import { supabase } from '@/lib/supabase';
 import type { Perfil } from '@/types';
 import type { User as SupabaseUser } from '@supabase/supabase-js';
+import {
+  MOCK_ENABLED,
+  MOCK_USER,
+  MOCK_PROFILE,
+  validateMockCredentials
+} from '@/lib/mockData';
 
 interface AuthState {
   user: SupabaseUser | null;
@@ -25,7 +31,46 @@ export const useAuthStore = create<AuthState>((set, get) => ({
 
   signIn: async (email: string, password: string) => {
     set({ loading: true, error: null });
+
     try {
+      // Modo Mock - Login sem banco de dados
+      if (MOCK_ENABLED) {
+        console.log('🔐 [MOCK MODE] Tentando login com:', email);
+
+        // Simular delay de rede
+        await new Promise(resolve => setTimeout(resolve, 500));
+
+        if (validateMockCredentials(email, password)) {
+          console.log('✅ [MOCK MODE] Login bem-sucedido!');
+          console.log('👤 [MOCK MODE] Usuário:', MOCK_USER);
+
+          const newState = {
+            user: MOCK_USER as SupabaseUser,
+            profile: MOCK_PROFILE,
+            loading: false,
+            initialized: true
+          };
+
+          console.log('📦 [MOCK MODE] Atualizando estado para:', newState);
+          set(newState);
+
+          // Verificar se o estado foi atualizado
+          const currentState = get();
+          console.log('✓ [MOCK MODE] Estado atual após set:', {
+            user: !!currentState.user,
+            userId: currentState.user?.id,
+            initialized: currentState.initialized
+          });
+
+          return { success: true, requiresPasswordChange: false };
+        } else {
+          console.log('❌ [MOCK MODE] Credenciais inválidas');
+          set({ loading: false, error: 'Credenciais inválidas' });
+          return { success: false, error: 'Credenciais inválidas' };
+        }
+      }
+
+      // Modo Normal - Login com Supabase
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
@@ -56,15 +101,15 @@ export const useAuthStore = create<AuthState>((set, get) => ({
             .eq('id', data.user.id);
         }
 
-        set({ 
-          user: data.user, 
-          profile: profile || null, 
-          loading: false 
+        set({
+          user: data.user,
+          profile: profile || null,
+          loading: false
         });
 
-        return { 
-          success: true, 
-          requiresPasswordChange 
+        return {
+          success: true,
+          requiresPasswordChange
         };
       }
 
@@ -77,13 +122,31 @@ export const useAuthStore = create<AuthState>((set, get) => ({
 
   signOut: async () => {
     set({ loading: true });
+
+    // Modo Mock - Logout sem banco de dados
+    if (MOCK_ENABLED) {
+      await new Promise(resolve => setTimeout(resolve, 300));
+      set({ user: null, profile: null, loading: false });
+      return;
+    }
+
+    // Modo Normal - Logout com Supabase
     await supabase.auth.signOut();
     set({ user: null, profile: null, loading: false });
   },
 
   changePassword: async (currentPassword: string, newPassword: string) => {
     set({ loading: true, error: null });
+
     try {
+      // Modo Mock - Alterar senha sem banco de dados
+      if (MOCK_ENABLED) {
+        await new Promise(resolve => setTimeout(resolve, 500));
+        set({ loading: false });
+        return { success: true };
+      }
+
+      // Modo Normal - Alterar senha com Supabase
       const { error } = await supabase.auth.updateUser({
         password: newPassword
       });
@@ -104,8 +167,21 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     set({ loading: true });
 
     try {
+      // Modo Mock - Inicialização sem banco de dados
+      if (MOCK_ENABLED) {
+        await new Promise(resolve => setTimeout(resolve, 300));
+        set({
+          user: null,
+          profile: null,
+          loading: false,
+          initialized: true
+        });
+        return;
+      }
+
+      // Modo Normal - Inicialização com Supabase
       const { data: { session } } = await supabase.auth.getSession();
-      
+
       if (session?.user) {
         // Buscar perfil do usuário
         const { data: profile } = await supabase
@@ -114,14 +190,14 @@ export const useAuthStore = create<AuthState>((set, get) => ({
           .eq('id', session.user.id)
           .single();
 
-        set({ 
+        set({
           user: session.user,
           profile,
           loading: false,
           initialized: true
         });
       } else {
-        set({ 
+        set({
           user: null,
           profile: null,
           loading: false,
@@ -138,19 +214,19 @@ export const useAuthStore = create<AuthState>((set, get) => ({
             .eq('id', session.user.id)
             .single();
 
-          set({ 
+          set({
             user: session.user,
             profile
           });
         } else if (event === 'SIGNED_OUT') {
-          set({ 
+          set({
             user: null,
             profile: null
           });
         }
       });
     } catch (error) {
-      set({ 
+      set({
         loading: false,
         initialized: true
       });
