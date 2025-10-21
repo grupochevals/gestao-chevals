@@ -11,6 +11,7 @@ import { useAuthStore } from '@/stores/authStore';
 import { toast } from 'sonner';
 
 const passwordChangeSchema = z.object({
+  currentPassword: z.string().min(1, 'Senha atual é obrigatória'),
   newPassword: z
     .string()
     .min(8, 'A senha deve ter pelo menos 8 caracteres')

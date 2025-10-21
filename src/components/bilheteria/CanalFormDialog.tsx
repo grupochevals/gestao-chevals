@@ -26,9 +26,7 @@ import { toast } from 'sonner';
 
 const canalSchema = z.object({
   nome: z.string().min(1, 'Nome é obrigatório'),
-  tipo: z.enum(['presencial', 'online', 'telefone', 'terceiro', 'cortesia'], {
-    required_error: 'Tipo é obrigatório',
-  }),
+  tipo: z.enum(['presencial', 'online', 'telefone', 'terceiro', 'cortesia'], 'Tipo é obrigatório'),
   responsavel: z.string().optional(),
   contato: z.string().optional(),
   taxa_servico: z.string().optional(),

@@ -12,9 +12,7 @@ import type { Entidade } from '@/types';
 
 const entitySchema = z.object({
   nome: z.string().min(1, 'Nome é obrigatório'),
-  tipo: z.enum(['cliente', 'parceiro', 'fornecedor'], {
-    required_error: 'Tipo é obrigatório',
-  }),
+  tipo: z.enum(['cliente', 'parceiro', 'fornecedor'], 'Tipo é obrigatório'),
   documento: z.string().optional(),
   email: z.string().email('Email inválido').optional().or(z.literal('')),
   telefone: z.string().optional(),
@@ -23,6 +21,7 @@ const entitySchema = z.object({
   estado: z.string().optional(),
   cep: z.string().optional(),
   observacoes: z.string().optional(),
+  ativo: z.boolean().default(true),
 });
 
 type EntityFormData = z.infer<typeof entitySchema>;

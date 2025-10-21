@@ -15,9 +15,7 @@ const projectSchema = z.object({
   descricao: z.string().optional(),
   data_inicio: z.string().optional(),
   data_fim: z.string().optional(),
-  status: z.enum(['planejamento', 'ativo', 'concluido', 'cancelado'], {
-    required_error: 'Status é obrigatório',
-  }),
+  status: z.enum(['planejamento', 'ativo', 'concluido', 'cancelado'], 'Status é obrigatório'),
   orcamento: z.number().min(0, 'Orçamento deve ser positivo').optional(),
   responsavel: z.string().optional(),
   observacoes: z.string().optional(),
