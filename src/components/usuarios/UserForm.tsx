@@ -45,6 +45,10 @@ interface UserFormProps {
 export function UserForm({ user, perfis, onSuccess, onCancel }: UserFormProps) {
   const { toast } = useToast();
 
+  // Debug: verificar perfis recebidos
+  console.log('[UserForm] Perfis recebidos:', perfis);
+  console.log('[UserForm] Total de perfis:', perfis.length);
+
   const form = useForm<UserFormValues>({
     resolver: zodResolver(userFormSchema),
     defaultValues: {
@@ -187,11 +191,17 @@ export function UserForm({ user, perfis, onSuccess, onCancel }: UserFormProps) {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {perfis.map((perfil) => (
-                    <SelectItem key={perfil.id} value={perfil.id.toString()}>
-                      {perfil.nome}
-                    </SelectItem>
-                  ))}
+                  {perfis.length === 0 ? (
+                    <div className="p-2 text-sm text-gray-500">
+                      Nenhum perfil disponível
+                    </div>
+                  ) : (
+                    perfis.map((perfil) => (
+                      <SelectItem key={perfil.id} value={perfil.id.toString()}>
+                        {perfil.nome}
+                      </SelectItem>
+                    ))
+                  )}
                 </SelectContent>
               </Select>
               <FormDescription>
