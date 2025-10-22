@@ -12,6 +12,7 @@ import { Projetos } from '@/pages/Projetos';
 import { Bilheteria } from '@/pages/Bilheteria';
 import { Financeiro } from '@/pages/Financeiro';
 import { Configuracoes } from '@/pages/Configuracoes';
+import { Usuarios } from '@/pages/Usuarios';
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
             <Route path="projetos" element={<Projetos />} />
             <Route path="bilheteria" element={<Bilheteria />} />
             <Route path="financeiro" element={<Financeiro />} />
+            <Route path="usuarios" element={<Usuarios />} />
             <Route path="configuracoes" element={<Configuracoes />} />
           </Route>
         </Routes>

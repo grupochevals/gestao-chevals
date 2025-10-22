@@ -27,7 +27,7 @@ export const MOCK_PROFILE: User = {
   id: 'mock-user-id',
   email: 'admin@gestao-chevals.com',
   nome: 'Administrador',
-  perfil_id: '1',
+  perfil_id: 1,
   ativo: true,
   primeiro_login: false,
   created_at: new Date().toISOString(),

@@ -9,7 +9,8 @@ import {
   DollarSign,
   Settings,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  UserCog
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -21,6 +22,7 @@ const navigation = [
   { name: 'Projetos', href: '/projetos', icon: Calendar },
   { name: 'Bilheteria', href: '/bilheteria', icon: Ticket },
   { name: 'Financeiro', href: '/financeiro', icon: DollarSign },
+  { name: 'Usuários', href: '/usuarios', icon: UserCog },
   { name: 'Configurações', href: '/configuracoes', icon: Settings },
 ];
 

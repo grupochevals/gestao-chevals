@@ -3,7 +3,7 @@ export interface User {
   id: string;
   email: string;
   nome: string;
-  perfil_id: string;
+  perfil_id: number;
   ativo: boolean;
   primeiro_login: boolean;
   created_at: string;
@@ -11,7 +11,7 @@ export interface User {
 }
 
 export interface Perfil {
-  id: string;
+  id: number;
   nome: string;
   descricao?: string;
   ativo: boolean;
