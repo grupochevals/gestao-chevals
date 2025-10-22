@@ -78,13 +78,14 @@ export function UserForm({ user, perfis, onSuccess, onCancel }: UserFormProps) {
 
         if (updateError) throw updateError;
 
-        // Se forneceu nova senha, atualizar no auth
+        // Nota: Atualização de senha via admin requer service_role key
+        // Por enquanto, o usuário pode resetar a senha via "Esqueci minha senha"
         if (values.password) {
-          const { error: authError } = await supabase.auth.admin.updateUserById(
-            user.id,
-            { password: values.password }
-          );
-          if (authError) throw authError;
+          toast({
+            title: 'Aviso',
+            description: 'Atualização de senha não implementada. Use "Esqueci minha senha".',
+            variant: 'default',
+          });
         }
 
         toast({
@@ -92,28 +93,33 @@ export function UserForm({ user, perfis, onSuccess, onCancel }: UserFormProps) {
           description: 'As informações do usuário foram atualizadas com sucesso.',
         });
       } else {
-        // Criar novo usuário
-        const { data: authData, error: authError } = await supabase.auth.admin.createUser({
+        // Criar novo usuário usando signUp
+        const { data: authData, error: authError } = await supabase.auth.signUp({
           email: values.email,
           password: values.password || generateRandomPassword(),
-          email_confirm: true,
-          user_metadata: {
-            nome: values.nome,
+          options: {
+            data: {
+              nome: values.nome,
+            },
+            emailRedirectTo: window.location.origin + '/change-password',
           },
         });
 
         if (authError) throw authError;
         if (!authData.user) throw new Error('Erro ao criar usuário');
 
-        // Criar registro na tabela users
-        const { error: userError } = await supabase.from('users').insert({
-          id: authData.user.id,
-          nome: values.nome,
-          email: values.email,
-          perfil_id: parseInt(values.perfil_id),
-          ativo: values.ativo,
-          primeiro_login: values.primeiro_login,
-        });
+        // Aguardar um pouco para o trigger criar o registro
+        await new Promise(resolve => setTimeout(resolve, 1000));
+
+        // Atualizar o registro criado pelo trigger com perfil_id
+        const { error: userError } = await supabase
+          .from('users')
+          .update({
+            perfil_id: parseInt(values.perfil_id),
+            ativo: values.ativo,
+            primeiro_login: values.primeiro_login,
+          })
+          .eq('id', authData.user.id);
 
         if (userError) throw userError;
 
