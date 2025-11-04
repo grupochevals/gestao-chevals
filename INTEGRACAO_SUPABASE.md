@@ -25,7 +25,7 @@
    ```
 
 4. **Configuração Supabase**:
-   - URL: `https://lxvacujwtqjfdpperxdr.supabase.co`
+   - URL: `https://irtnaxveqpjhcjyagbzc.supabase.co`
    - Migrations prontas em `supabase/migrations/`
    - RLS (Row Level Security) configurado
 
@@ -56,7 +56,7 @@
 ### 1. Verificar se as migrations foram executadas
 
 Acesse o Supabase Dashboard:
-https://supabase.com/dashboard/project/lxvacujwtqjfdpperxdr/editor
+https://supabase.com/dashboard/project/irtnaxveqpjhcjyagbzc/editor
 
 Execute as migrations na ordem:
 
@@ -111,7 +111,7 @@ ON CONFLICT (id) DO NOTHING;
 
 **Opção B: Via Dashboard**
 
-1. Acesse: https://supabase.com/dashboard/project/lxvacujwtqjfdpperxdr/auth/users
+1. Acesse: https://supabase.com/dashboard/project/irtnaxveqpjhcjyagbzc/auth/users
 2. Clique em "Add User"
 3. Email: `admin@gestao-chevals.com`
 4. Senha: (defina uma senha forte)
@@ -245,10 +245,10 @@ async function createUser(data: {
 
 ## 🔗 Links Úteis
 
-- **Supabase Dashboard**: https://supabase.com/dashboard/project/lxvacujwtqjfdpperxdr
-- **SQL Editor**: https://supabase.com/dashboard/project/lxvacujwtqjfdpperxdr/editor
-- **Auth Users**: https://supabase.com/dashboard/project/lxvacujwtqjfdpperxdr/auth/users
-- **Table Editor**: https://supabase.com/dashboard/project/lxvacujwtqjfdpperxdr/editor
+- **Supabase Dashboard**: https://supabase.com/dashboard/project/irtnaxveqpjhcjyagbzc
+- **SQL Editor**: https://supabase.com/dashboard/project/irtnaxveqpjhcjyagbzc/editor
+- **Auth Users**: https://supabase.com/dashboard/project/irtnaxveqpjhcjyagbzc/auth/users
+- **Table Editor**: https://supabase.com/dashboard/project/irtnaxveqpjhcjyagbzc/editor
 
 ## ⚠️ Importante
 

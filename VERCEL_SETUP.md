@@ -12,12 +12,12 @@ O deploy está falhando porque as variáveis de ambiente não foram configuradas
 
 #### Variável 1: VITE_SUPABASE_URL
 - **Key**: `VITE_SUPABASE_URL`
-- **Value**: `https://afgjyonvafajmyusrfih.supabase.co`
+- **Value**: `https://irtnaxveqpjhcjyagbzc.supabase.co`
 - **Environments**: ✅ Production, ✅ Preview, ✅ Development
 
 #### Variável 2: VITE_SUPABASE_ANON_KEY
 - **Key**: `VITE_SUPABASE_ANON_KEY`
-- **Value**: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFmZ2p5b252YWZham15dXNyZmloIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjEwNTA2MjMsImV4cCI6MjA3NjYyNjYyM30.s-q7c1PGLOYQ3oAugjca9J8m25DolllABt76A4pBwco`
+- **Value**: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlydG5heHZlcXBqaGNqeWFnYnpjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjEwMzkwODYsImV4cCI6MjA3NjYxNTA4Nn0.lcayGs3ktrT0iCTljiYNIS4lxIt3jGqmc1Tv__NeRR4`
 - **Environments**: ✅ Production, ✅ Preview, ✅ Development
 
 #### Variável 3: VITE_MOCK_MODE

@@ -1,5 +1,5 @@
 -- ========================================
--- VINCULAR USUÁRIO virginia@beflyminascentro.com.br COMO ADMINISTRADOR
+-- VINCULAR USUÁRIO pv.barbosa@gmail.com COMO ADMINISTRADOR
 -- Execute APÓS criar o usuário no Authentication
 -- ========================================
 
@@ -10,7 +10,7 @@ SELECT
     email_confirmed_at,
     created_at
 FROM auth.users
-WHERE email = 'virginia@beflyminascentro.com.br';
+WHERE email = 'pv.barbosa@gmail.com';
 
 -- PASSO 2: Verificar se o perfil de Administrador existe
 SELECT id, nome, descricao
@@ -28,17 +28,17 @@ INSERT INTO public.users (
 )
 SELECT
     au.id,
-    'virginia@beflyminascentro.com.br',
-    'Virginia',
+    'pv.barbosa@gmail.com',
+    'Paulo Barbosa',
     (SELECT id FROM perfis WHERE nome = 'Administrador' LIMIT 1),
     true,
-    false
+    false  -- false porque já é um usuário existente
 FROM auth.users au
-WHERE au.email = 'virginia@beflyminascentro.com.br'
+WHERE au.email = 'pv.barbosa@gmail.com'
 ON CONFLICT (id) DO UPDATE
 SET
     perfil_id = (SELECT id FROM perfis WHERE nome = 'Administrador' LIMIT 1),
-    nome = 'Virginia',
+    nome = 'Paulo Barbosa',
     ativo = true,
     updated_at = NOW();
 
@@ -54,7 +54,7 @@ SELECT
     u.created_at
 FROM users u
 LEFT JOIN perfis p ON u.perfil_id = p.id
-WHERE u.email = 'virginia@beflyminascentro.com.br';
+WHERE u.email = 'pv.barbosa@gmail.com';
 
 -- PASSO 5: Verificar todas as permissões do usuário
 SELECT
@@ -68,7 +68,7 @@ FROM users u
 JOIN perfis p ON u.perfil_id = p.id
 JOIN perfil_permissoes pp ON p.id = pp.perfil_id
 JOIN permissoes perm ON pp.permissao_id = perm.id
-WHERE u.email = 'virginia@beflyminascentro.com.br'
+WHERE u.email = 'pv.barbosa@gmail.com'
 ORDER BY perm.modulo, perm.acao;
 
 -- ========================================

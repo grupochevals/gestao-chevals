@@ -116,11 +116,11 @@ ON CONFLICT (nome) DO NOTHING;
 
 -- Atribuir todas as permissões ao perfil Administrador
 INSERT INTO perfil_permissoes (perfil_id, permissao_id)
-SELECT 
+SELECT
     (SELECT id FROM perfis WHERE nome = 'Administrador'),
     p.id
 FROM permissoes p
-ON CONFLICT DO NOTHING;
+ON CONFLICT (perfil_id, permissao_id) DO NOTHING;
 
 -- Função para atualizar updated_at
 CREATE OR REPLACE FUNCTION update_updated_at_column()
